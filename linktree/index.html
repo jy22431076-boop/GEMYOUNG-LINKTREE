@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f4ede6">
+<title>GEMYOUNG｜光影柔和款 V2 調整版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:#eee5dc;color:#563b2c}
+body{
+  font-family:"Noto Serif TC","PMingLiU",serif;
+  -webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(circle at 50% 0,#faf6f1 0,#eee5dc 65%,#e8ddd2 100%);
+}
+a{color:inherit;text-decoration:none}
+svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
+
+.stage{
+  min-height:100vh;
+  padding:0 14px 30px;
+  display:flex;
+  justify-content:center;
+}
+
+.page{
+  --px:0px;
+  --py:0px;
+  width:min(100%,430px);
+  min-height:100vh;
+  position:relative;
+  overflow:hidden;
+  isolation:isolate;
+  box-shadow:0 24px 80px rgba(68,45,31,.14);
+  background:linear-gradient(180deg,#f7f0e9 0%,#f2e7dd 52%,#ead9ca 72%,#e1cab7 100%);
+}
+
+/* 背景光影 */
+.light-shadow{
+  position:absolute; inset:0; z-index:0; pointer-events:none;
+  transform:translate(var(--px),var(--py));
+  transition:transform .12s linear;
+}
+.light-shadow:before{
+  content:"";
+  position:absolute;
+  left:-55px; top:55px;
+  width:250px; height:570px;
+  background:
+    linear-gradient(76deg,transparent 0 45%,rgba(89,68,55,.085) 46% 49%,transparent 50%),
+    radial-gradient(ellipse at 32% 18%,rgba(85,65,52,.09) 0 6%,transparent 7%),
+    radial-gradient(ellipse at 66% 28%,rgba(85,65,52,.08) 0 7%,transparent 8%),
+    radial-gradient(ellipse at 43% 42%,rgba(85,65,52,.07) 0 7%,transparent 8%);
+  filter:blur(5px);
+  transform:rotate(-10deg);
+}
+
+/* 頂部品牌區，往上靠 */
+.top{
+  position:relative;
+  z-index:3;
+  padding:28px 28px 12px;
+}
+.brand-mark{
+  width:42px;height:42px;margin:0 auto 10px;display:grid;place-items:center;color:#694634
+}
+.brand-mark svg{width:34px;height:34px;stroke-width:1.25}
+.brand-en{
+  font-family:"Cormorant Garamond",serif;
+  font-size:31px;letter-spacing:.18em;font-weight:500;
+  margin:0;text-align:center;line-height:1
+}
+.brand-zh{
+  text-align:center;margin:7px 0 0;
+  font-size:12px;letter-spacing:.3em;color:#755648
+}
+.tag{
+  margin:34px auto 24px;
+  text-align:center;
+  font-family:"Cormorant Garamond",serif;
+  font-size:17px;
+  line-height:1.8;
+  letter-spacing:.22em;
+  color:#75503c;
+  text-transform:uppercase;
+}
+.tag .bar{
+  display:block;width:1px;height:24px;background:#9b7a66;margin:11px auto 0
+}
+
+/* 按鈕區 */
+.links{
+  position:relative;
+  z-index:5;
+  display:grid;
+  gap:9px;
+  padding:0 26px 0;
+}
+.link-card{
+  --mx:50%;--my:50%;
+  min-height:59px;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  padding:8px 13px 8px 11px;
+  border-radius:22px;
+  background:rgba(255,251,247,.89);
+  border:1px solid rgba(255,255,255,.82);
+  box-shadow:0 7px 20px rgba(81,54,38,.08);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  position:relative;
+  overflow:hidden;
+  transition:transform .22s ease,box-shadow .22s ease,background .22s ease;
+}
+.link-card:before{
+  content:"";
+  position:absolute; inset:0; opacity:0;
+  background:radial-gradient(130px circle at var(--mx) var(--my),rgba(255,255,255,.78),transparent 66%);
+  transition:opacity .2s ease;
+  pointer-events:none
+}
+.link-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 13px 28px rgba(81,54,38,.13);
+  background:rgba(255,253,250,.96)
+}
+.link-card:hover:before{opacity:.7}
+.link-card.pressed{transform:translateY(0) scale(.985)}
+.icon-badge{
+  width:42px;height:42px;flex:0 0 42px;border-radius:50%;
+  display:grid;place-items:center;color:#714831;
+  background:rgba(255,255,255,.55);
+  transition:transform .22s ease,background .22s ease
+}
+.link-card:hover .icon-badge{
+  transform:scale(1.04);
+  background:rgba(255,255,255,.82)
+}
+.copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+.copy strong{
+  font-family:"Cormorant Garamond","Noto Serif TC",serif;
+  font-size:19px;font-weight:600;letter-spacing:.035em;line-height:1.06
+}
+.copy small{
+  font-size:10px;color:#8a7164;letter-spacing:.08em;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.chev{
+  font-family:Arial,sans-serif;font-size:25px;font-weight:200;
+  color:#73513e;transform:translateX(0);transition:transform .2s ease
+}
+.link-card:hover .chev{transform:translateX(3px)}
+
+/* 動畫 */
+.reveal{opacity:0;transform:translateY(8px)}
+.reveal.show{
+  opacity:1;transform:translateY(0);
+  transition:opacity .5s ease,transform .5s ease,box-shadow .22s ease,background .22s ease
+}
+
+/* ===== 底部透明 PNG 圖片 ===== */
+.bottom-art-section{
+  position:relative;
+  z-index:2;
+  margin-top:-20px;
+  padding:0;
+  background:transparent;
+  overflow:visible;
+}
+
+.bottom-art-section img{
+  display:block;
+  width:100%;
+  height:auto;
+  margin:0;
+  padding:0;
+  border:0;
+  border-radius:0;
+  box-shadow:none;
+  background:transparent;
+  object-fit:contain;
+}
+
+@media(max-width:460px){
+  .bottom-art-section img{
+    width:106%;
+    max-width:none;
+    margin-left:-3%;
+  }
+}
+
+/* 底部文字 */
+.footer{
+  position:relative;
+  z-index:5;
+  text-align:center;
+  padding:16px 20px 28px;
+  color:#6f5547;
+  text-shadow:0 1px rgba(255,255,255,.45)
+}
+.footer .line{
+  width:62px;height:1px;margin:0 auto 15px;background:#a78775
+}
+.footer .tiny{
+  font-family:"Cormorant Garamond",serif;
+  font-size:12px;letter-spacing:.3em;text-transform:uppercase
+}
+
+@media(max-width:460px){
+  .stage{padding:0}
+  .page{width:100%;box-shadow:none}
+  .links{padding-left:22px;padding-right:22px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+
+.brand-logo{
+  width: 220px;
+  margin: 0 auto 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.brand-logo img{
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 120px;
+  object-fit: contain;
+}
+.tag h2{
+  font-size: 12px;
+}
+.tag-title{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:14px;
+  width:100%;
+}
+
+.tag-title .line{
+  width:55px;
+  height:1px;
+  background:#a78775;
+}
+
+.tag-title h2{
+  margin:0;
+  font-size:14px;
+  font-weight:400;
+  font-family:"Noto Serif TC","PMingLiU",serif;
+  letter-spacing:.08em;
+  white-space:nowrap;
+}
+.social-icons{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:18px;
+  margin-top:16px;
+  margin-bottom:8px;
+}
+
+.social-icons a{
+  width:30px;
+  height:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#563b2c;
+  text-decoration:none;
+  transition:
+    transform .2s ease,
+    color .2s ease,
+    opacity .2s ease;
+}
+
+.social-icons svg{
+  width:25px;
+  height:25px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.social-icons a:hover{
+  transform:translateY(-3px) scale(1.08);
+  color:#b88d68;
+}
+
+.social-icons a:active{
+  transform:scale(.92);
+}
+</style>
+</head>
+
+<body>
+<div class="stage">
+  <main class="page">
+    <div class="light-shadow"></div>
+
+    <header class="top">
+     <div class="brand-logo">
+  <img src="./logo.png" alt="GEMYOUNG 晶漾金飾鑽石">
+</div>
+     
+     <div class="tag-title">
+  <div class="line"></div>
+
+  <h2>✧ 晶漾讓珍藏 💎 成為日常 ✧</h2>
+
+  <div class="line"></div>
+</div>
+<div class="social-icons">
+
+  <!-- 官網 -->
+  <a href="https://https://www.jy-jewel.com.tw/?srsltid=AU7gw4W5ZYwzFGdqRnbmVIGwTmFC8oIhjNbHtVjPg0OaR80U2o_Bm6y9" target="_blank" aria-label="官方網站">
+    <svg viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="10"></circle>
+      <path d="M6 16h20"></path>
+      <path d="M16 6c3 3 4.5 6.5 4.5 10S19 23 16 26"></path>
+      <path d="M16 6c-3 3-4.5 6.5-4.5 10S13 23 16 26"></path>
+    </svg>
+  </a>
+
+  <!-- Instagram -->
+  <a href="https://www.instagram.com/gemyoung_jewelry" target="_blank" aria-label="Instagram">
+    <svg viewBox="0 0 32 32">
+      <rect x="6" y="6" width="20" height="20" rx="6"></rect>
+      <circle cx="16" cy="16" r="4.5"></circle>
+      <circle cx="22.5" cy="9.5" r="1"></circle>
+    </svg>
+  </a>
+
+  <!-- Facebook -->
+  <a href="https://www.facebook.com/jy.jewelry.com.tw?locale=zh_TW" target="_blank" aria-label="Facebook">
+    <svg viewBox="0 0 32 32">
+      <circle cx="16" cy="16" r="11"></circle>
+      <path d="M18 10h3"></path>
+      <path d="M18 10c-2.2 0-3.5 1.3-3.5 3.8V16H12"></path>
+      <path d="M12 16h8"></path>
+      <path d="M15 16v9"></path>
+    </svg>
+  </a>
+
+  <!-- TikTok -->
+  <a href="https://www.tiktok.com/@jingyanglinlin" target="_blank" aria-label="TikTok">
+    <svg viewBox="0 0 32 32">
+      <path d="M14 7v14"></path>
+      <path d="M14 21a4.5 4.5 0 1 1-3.5-4.4"></path>
+      <path d="M14 9c2.3 2.8 5.2 4 8.5 4V9.5c-2 0-3.7-1-4.7-2.5"></path>
+    </svg>
+  </a>
+
+</div>
+    </header>
+<section class="links">
+
+  <!-- 1｜官方 LINE -->
+  <a class="link-card reveal" data-key="line" href="#" target="_blank" rel="noopener">
+    <span class="icon-badge">
+      <svg viewBox="0 0 32 32">
+        <path d="M6 8.5h20v14H15l-5 4v-4H6z"/>
+        <path d="M10 13v5m4-5v5m4-5l3 5v-5"/>
+      </svg>
+    </span>
+
+    <span class="copy">
+      <strong>LINE 官方帳號</strong>
+      <small>即時諮詢 · 專屬服務</small>
+    </span>
+
+    <span class="chev">›</span>
+  </a>
+
+
+  <!-- 2｜晶漾珠寶｜旗艦店 -->
+  <a class="link-card reveal" data-key="flagship" href="#" target="_blank" rel="noopener">
+    <span class="icon-badge">
+      <svg viewBox="0 0 32 32">
+        <path d="M16 28s8-7.2 8-15a8 8 0 1 0-16 0c0 7.8 8 15 8 15z"/>
+        <circle cx="16" cy="13" r="2.8"/>
+      </svg>
+    </span>
+
+    <span class="copy">
+      <strong>晶漾珠寶｜旗艦店</strong>
+      <small>門市地址 · Google Maps 導航</small>
+    </span>
+
+    <span class="chev">›</span>
+  </a>
+
+
+  <!-- 3｜晶漾珠寶｜市政店 -->
+  <a class="link-card reveal" data-key="cityhall" href="#" target="_blank" rel="noopener">
+    <span class="icon-badge">
+      <svg viewBox="0 0 32 32">
+        <path d="M16 28s8-7.2 8-15a8 8 0 1 0-16 0c0 7.8 8 15 8 15z"/>
+        <circle cx="16" cy="13" r="2.8"/>
+      </svg>
+    </span>
+
+    <span class="copy">
+      <strong>晶漾珠寶｜市政店</strong>
+      <small>門市地址 · Google Maps 導航</small>
+    </span>
+
+    <span class="chev">›</span>
+  </a>
+
+
+  <!-- 4｜官方網站 -->
+  <a class="link-card reveal" data-key="website" href="#" target="_blank" rel="noopener">
+    <span class="icon-badge">
+      <svg viewBox="0 0 32 32">
+        <circle cx="16" cy="16" r="10"/>
+        <path d="M6 16h20"/>
+        <path d="M16 6c3 3 4.5 6.5 4.5 10S19 23 16 26"/>
+        <path d="M16 6c-3 3-4.5 6.5-4.5 10S13 23 16 26"/>
+      </svg>
+    </span>
+
+    <span class="copy">
+      <strong>線上選品｜官方網站</strong>
+      <small>GEMYOUNG 官方珠寶選品</small>
+    </span>
+
+    <span class="chev">›</span>
+  </a>
+
+
+  <!-- 5｜momo -->
+  <a class="link-card reveal" data-key="momo" href="#" target="_blank" rel="noopener">
+    <span class="icon-badge">
+      <svg viewBox="0 0 32 32">
+        <path d="M7 10h18l-1.5 14h-15z"/>
+        <path d="M11 10V8a5 5 0 0 1 10 0v2"/>
+      </svg>
+    </span>
+
+    <span class="copy">
+      <strong>線上選品｜momo 購物網</strong>
+      <small>晶漾 momo 官方銷售平台</small>
+    </span>
+
+    <span class="chev">›</span>
+  </a>
+
+</section>
+    
+
+    <!-- 底部珠寶透明 PNG -->
+<section class="bottom-art-section">
+  <img
+    src="./ring.png"
+    alt="GEMYOUNG 戒指珠寶形象圖"
+    loading="lazy"
+    decoding="async"
+  >
+</section>
+
+    <footer class="footer">
+      <div class="line"></div>
+      <div class="tiny">timeless memories endless love</div>
+<div class="tiny">將幸福傳遞 讓回憶延續</div>
+    </footer>
+  </main>
+</div>
+
+<script>
+const LINKS = {
+
+  // LINE 官方帳號
+  line: "https://page.line.me/vby9961i?openQrModal=true",
+
+  // 旗艦店 Google Maps
+  flagship: "https://maps.app.goo.gl/oCwfoMLfK2XtJo7r6",
+
+  // 市政體驗館 Google Maps
+  cityhall: "https://maps.app.goo.gl/W8MqK3qbhSdfqHHE9",
+
+  // 晶漾官方網站
+  website: "https://www.jy-jewel.com.tw/?srsltid=AU7gw4UdomkJYJ4pCvuFG3pFTeg6em0YqBiKiGNCrDGJkJqJYAN2Kx-3",
+
+  // momo 商城
+  momo: "https://www.momoshop.com.tw/categories/3100700530?srsltid=AU7gw4VYacsWvQVYipbTNdLGW96DOFQHNus9kqo2Q3gONc6xiudA-pTN"
+
+};
+
+document.querySelectorAll("[data-key]").forEach(a=>{
+  const url = LINKS[a.dataset.key];
+  if(url) a.href = url;
+
+  a.addEventListener("pointerdown",()=>a.classList.add("pressed"));
+  ["pointerup","pointercancel","pointerleave"].forEach(ev=>
+    a.addEventListener(ev,()=>a.classList.remove("pressed"))
+  );
+
+  a.addEventListener("pointermove",e=>{
+    const r=a.getBoundingClientRect();
+    a.style.setProperty("--mx", `${e.clientX-r.left}px`);
+    a.style.setProperty("--my", `${e.clientY-r.top}px`);
+  });
+});
+
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add("show");
+      io.unobserve(e.target);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+const page = document.querySelector(".page");
+window.addEventListener("pointermove", e=>{
+  if(window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const x=(e.clientX/window.innerWidth-.5)*8;
+  const y=(e.clientY/window.innerHeight-.5)*8;
+  page.style.setProperty("--px", `${x}px`);
+  page.style.setProperty("--py", `${y}px`);
+});
+</script>
+</body>
+</html>
